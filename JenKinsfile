@@ -5,13 +5,18 @@ pipeline {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
     }
+    parameters {
+        text(name: 'GitBranche')
+
+        string(name: 'SonUrl')
+    }
 
     stages {
         stage('Git') {
             steps {
                 // Get some code from a GitHub repository
-                git branch: 'main',
-                url: 'https://github.com/matthcol/movieapp_jdbc.git'
+                git branch: "${params.GitBranche}",
+                url: "${params.SonUrl}"
             }
         }
         stage('Compile') {
@@ -42,3 +47,16 @@ pipeline {
         }
     }
 }
+
+
+parameters {
+        string(name: 'PERSON', defaultValue: 'Mr Jenkins', description: 'Who should I say hello to?')
+
+        text(name: 'BIOGRAPHY', defaultValue: '', description: 'Enter some information about the person')
+
+        booleanParam(name: 'TOGGLE', defaultValue: true, description: 'Toggle this value')
+
+        choice(name: 'CHOICE', choices: ['One', 'Two', 'Three'], description: 'Pick something')
+
+        password(name: 'PASSWORD', defaultValue: 'SECRET', description: 'Enter a password')
+    }
