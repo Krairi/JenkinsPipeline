@@ -1,15 +1,18 @@
 pipeline {
     agent any
 
+    parameters {
+        string(name: 'GitBranche', description: 'Branche de construction')
+        string(name: 'SonUrl', description: 'Url depot')
+        choice(name: 'openJDK', choices: ['JDK11', 'JDK17'], description: 'Choisir un JDK')
+    }
+
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
+        "${params.openJDK}"
     }
-    parameters {
-        string(name: 'GitBranche', description: 'Branche de construction')
-
-        string(name: 'SonUrl', description: 'Url depot')
-    }
+    
 
     stages {
         stage('Git') {
@@ -47,3 +50,4 @@ pipeline {
         }
     }
 }
+
