@@ -4,13 +4,13 @@ pipeline {
     parameters {
         string(name: 'GitBranche', description: 'Branche de construction')
         string(name: 'SonUrl', description: 'Url depot')
-        choice(name: 'openJDK', choices: ['JDK11', 'JDK17'], description: 'Choisir un JDK')
+        choice(name: 'JAVA_VERSION', choices: ['8', '11', '17'], description: 'Java Version')
     }
 
     tools {
         // Install the Maven version configured as "M3" and add it to the path.
         maven "M3"
-        "${params.openJDK}"
+        jdk "JDK${params.JAVA_VERSION}"
     }
     
 
